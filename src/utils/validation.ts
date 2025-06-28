@@ -13,11 +13,31 @@ export function validateSchema<T>(schema: z.ZodSchema<T>, data: unknown, context
     return schema.parse(data);
   } catch (error) {
     if (error instanceof z.ZodError) {
-      const message = `Validation failed${context ? ` in ${context}` : ''}`;
-      logger.error(message, { issues: error.issues, receivedData: data });
+      const contextMessage = context ? ` in ${context}` : '';
+      const message = `Validation failed${contextMessage}: ${error.message}`;
+
+      logger.error(message, {
+        issues: error.issues,
+        receivedData: data
+      });
+
       throw new ValidationError(message, error.issues);
     }
     throw error;
+  }
+}
+
+export function safeValidateSchema<T>(schema: z.ZodSchema<T>, data: unknown): {
+  success: boolean;
+  data?: T;
+  error?: z.ZodError;
+} {
+  const result = schema.safeParse(data);
+  
+  if (result.success) {
+    return { success: true, data: result.data };
+  } else {
+    return { success: false, error: result.error };
   }
 }
 
