@@ -42,6 +42,7 @@
     "@azure/core-sse": "latest",
     "dotenv": "^16.5.0",
     "node-fetch": "^2.7.0",
+    "openai": "^5.8.2",
     "zod": "^3.25.67"
   },
   "devDependencies": {
