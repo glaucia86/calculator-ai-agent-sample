@@ -24,10 +24,20 @@ class Logger {
 
   private formatMessage(level: LogLevel, messsage: string, data?: any): string {
     const timestamp = new Date().toISOString();
-    const emoji = { debug: '🔍', info: 'ℹ️', warn: '⚠️', error: '❌' }[level];
+    const emoji = { 
+      debug: '🔍', 
+      info: 'ℹ️', 
+      warn: '⚠️', 
+      error: '❌' 
+    }[level];
+
     const baseMessage = `[${timestamp}] [${emoji}] [${level.toUpperCase()}]: ${messsage}`;
 
-    return data ? `${baseMessage}\nData: ${JSON.stringify(data, null, 2)}` : baseMessage;
+    if (data) {
+      return `${baseMessage}\nData: ${JSON.stringify(data, null, 2)}`;
+    }
+    
+    return baseMessage;
   }
 
   debug(message: string, data?: any): void {
@@ -42,12 +52,12 @@ class Logger {
 
   warn(message: string, data?: any): void {
     if (this.shouldLog('warn'))
-      console.log(this.formatMessage('warn', message, data));
+      console.warn(this.formatMessage('warn', message, data));
   }
 
   error(message: string, data?: any): void {
     if (this.shouldLog('error'))
-      console.log(this.formatMessage('error', message, data));
+      console.error(this.formatMessage('error', message, data));
   }
 }
 
