@@ -39,7 +39,25 @@ export const availableModels: Record<string, ModelConfig> = {
     maxTokens: 8192,
     costPer1kTokens: 0.018,
     description: "Claude 3.5 Sonnet model from Anthropic"
-  }
+  },
+  llama_405b: {
+    id: "meta/llama-3.1-405b-instruct",
+    name: "Llama 3.1 405B",
+    provider: "meta",
+    capabilities: ["chat", "function_calling"],
+    maxTokens: 4096,
+    costPer1kTokens: 0.02,
+    description: "Meta's largest and most capable open-source model"
+  },
+  grok_beta: {
+    id: "xai/grok-beta",
+    name: "Grok Beta",
+    provider: "xai",
+    capabilities: ["chat", "function_calling"],
+    maxTokens: 4096,
+    costPer1kTokens: 0.01,
+    description: "xAI's conversational AI with real-time information"
+  },
 };
 
 export const defaultModel: ModelConfig = availableModels.gpt4o;
