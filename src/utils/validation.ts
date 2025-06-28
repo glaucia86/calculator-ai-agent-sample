@@ -30,14 +30,34 @@ export function zodToOpenAIParams(schema: z.ZodObject<any>): any {
     const zodType = value as any;
     
     if (zodType instanceof z.ZodNumber) {
-      properties[key] = { type: "number", description: zodType.description || `Number: ${key}` };
+      properties[key] = {
+        type: "number",
+        description: zodType.description || `Number parameter: ${key}`
+      };
     } else if (zodType instanceof z.ZodString) {
-      properties[key] = { type: "string", description: zodType.description || `String: ${key}` };
-    } else if (zodType instanceof z.ZodEnum) {
-      properties[key] = { 
+      properties[key] = {
         type: "string", 
-        enum: zodType.options, 
-        description: zodType.description || `Enum: ${key}` 
+        description: zodType.description || `String parameter: ${key}`
+      };
+      
+      if (zodType instanceof z.ZodEnum) {
+        properties[key].enum = zodType.options;
+      }
+    } else if (zodType instanceof z.ZodEnum) {
+      properties[key] = {
+        type: "string",
+        enum: zodType.options,
+        description: zodType.description || `Enum parameter: ${key}`
+      };
+    } else if (zodType instanceof z.ZodArray) {
+      properties[key] = {
+        type: "array",
+        description: zodType.description || `Array parameter: ${key}`
+      };
+    } else if (zodType instanceof z.ZodBoolean) {
+      properties[key] = {
+        type: "boolean",
+        description: zodType.description || `Boolean parameter: ${key}`
       };
     }
 
@@ -46,5 +66,9 @@ export function zodToOpenAIParams(schema: z.ZodObject<any>): any {
     }
   }
 
-  return { type: "object", properties, required: required.length > 0 ? required : undefined };
+  return {
+    type: "object",
+    properties,
+    required: required.length > 0 ? required : undefined
+  };
 }
