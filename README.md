@@ -26,14 +26,15 @@ npm run examples:all
 ## 📁 Estrutura do Projeto
 
 ```
-src/
-├── config/          # Configuração de ambiente e modelos
-├── types/           # Schemas Zod e definições de tipos
-├── core/            # Cliente OpenAI e classe Agent principal
-├── tools/           # Implementação de tools com validação Zod
-├── utils/           # Utilitários (logger, validação)
-├── examples/        # Exemplos de uso
-└── index.ts         # Entry point
+ai-agent-tutorial/
+├── src/
+│   ├── agent.ts          # 🤖 O AI Agent principal
+│   ├── tools.ts          # 🔧 Ferramentas (Calculator)
+│   ├── schemas.ts        # 📝 Validação Zod
+│   └── examples.ts       # 🧪 Exemplos de uso
+├── package.json
+├── .env
+└── README.md
 ```
 
 ## 🛠 Principais Features
